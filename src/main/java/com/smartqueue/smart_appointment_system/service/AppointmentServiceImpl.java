@@ -4,15 +4,16 @@ import com.smartqueue.smart_appointment_system.entity.Appointment;
 import com.smartqueue.smart_appointment_system.entity.QueueToken;
 import com.smartqueue.smart_appointment_system.entity.StatusHistory;
 import com.smartqueue.smart_appointment_system.entity.User;
+import com.smartqueue.smart_appointment_system.exception.ResourceNotFoundException;
 import com.smartqueue.smart_appointment_system.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.smartqueue.smart_appointment_system.entity.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Service
+@org.springframework.stereotype.Service
 @RequiredArgsConstructor
 public class AppointmentServiceImpl implements AppointmentService {
 
@@ -32,16 +33,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         // 1. Fetch customer
         User customer = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         // 2. Fetch service
         Service service = (Service) serviceRepository.findById(serviceId)
-                .orElseThrow(() -> new RuntimeException("Service not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found"));
 
         // 3. Create appointment
         Appointment appointment = Appointment.builder()
                 .customer(customer)
-                .service((com.smartqueue.smart_appointment_system.entity.Service) service)
+                .service(service)
                 .appointmentTime(appointmentTime)
                 .currentStatus("SCHEDULED")
                 .build();
@@ -68,7 +69,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         // 6. Create queue token
         QueueToken queueToken = QueueToken.builder()
                 .appointment(appointment)
-                .service((com.smartqueue.smart_appointment_system.entity.Service) service)
+                .service(service)
                 .queueDate(today)
                 .tokenNumber(nextToken)
                 .active(true)
@@ -88,7 +89,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment updateStatus(Long appointmentId, String status) {
 
         Appointment appointment = appointmentRepository.findById(appointmentId)
-                .orElseThrow(() -> new RuntimeException("Appointment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
 
         appointment.setCurrentStatus(status);
 
