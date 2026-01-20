@@ -1,11 +1,11 @@
 package com.smartqueue.smart_appointment_system.repository;
 
-import com.smartqueue.smart_appointment_system.entity.Service;
+import com.smartqueue.smart_appointment_system.entity.BusinessService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ServiceRepository extends JpaRepository<Service, Long> {
+public interface ServiceRepository extends JpaRepository<BusinessService, Long> {
 
-    List<Service> findByBranchId(Long branchId);
+    List<BusinessService> findByBranchId(Long branchId);
 }

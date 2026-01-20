@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Table(
         name = "queue_tokens",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"service_id", "queue_date", "token_number"})
+                @UniqueConstraint(columnNames = {"business_service_id", "queue_date", "token_number"})
         }
 )
 @Getter
@@ -33,8 +33,11 @@ public class QueueToken {
     private Boolean active = true;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    @JoinColumn(
+            name = "business_service_id",
+            nullable = false
+    )
+    private BusinessService businessService;
 
     @OneToOne
     @JoinColumn(name = "appointment_id", nullable = false)

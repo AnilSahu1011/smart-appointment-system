@@ -1,6 +1,8 @@
 package com.smartqueue.smart_appointment_system.controller;
 
 import com.smartqueue.smart_appointment_system.dto.AppointmentResponse;
+import com.smartqueue.smart_appointment_system.dto.AppointmentResponseDTO;
+import com.smartqueue.smart_appointment_system.dto.CreateAppointmentDTO;
 import com.smartqueue.smart_appointment_system.dto.CreateAppointmentRequest;
 import com.smartqueue.smart_appointment_system.entity.Appointment;
 import com.smartqueue.smart_appointment_system.service.AppointmentService;
@@ -16,32 +18,18 @@ import org.springframework.web.bind.annotation.*;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
-    @GetMapping("/hello")
-    public ResponseEntity<String> sayHello(){
-        return new ResponseEntity<>("Hello from controller", HttpStatus.OK);
-    }
+
     @PostMapping
-    public ResponseEntity<AppointmentResponse> createAppointment(
-            @Valid @RequestBody CreateAppointmentRequest request
+    public AppointmentResponseDTO create(
+            @Valid @RequestBody CreateAppointmentDTO dto
     ) {
-
-        Appointment appointment = appointmentService.createAppointment(
-                request.userId(),
-                request.serviceId(),
-                request.appointmentTime()
-        );
-
-        AppointmentResponse response = new AppointmentResponse(
-                appointment.getId(),
-                appointment.getService().getName(),
-                appointment.getQueueToken().getTokenNumber(),
-                appointment.getCurrentStatus(),
-                appointment.getAppointmentTime()
-        );
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return appointmentService.createAppointment(dto);
     }
 
+    @GetMapping("/{id}")
+    public AppointmentResponseDTO getById(@PathVariable Long id) {
+        return appointmentService.getAppointmentById(id);
+    }
     @PatchMapping("/{id}/status")
     public ResponseEntity<String> updateStatus(
             @PathVariable Long id,
@@ -52,3 +40,4 @@ public class AppointmentController {
         return ResponseEntity.ok("Status updated successfully");
     }
 }
+

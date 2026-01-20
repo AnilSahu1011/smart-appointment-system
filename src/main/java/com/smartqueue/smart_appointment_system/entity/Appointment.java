@@ -24,8 +24,11 @@ public class Appointment {
     private User customer;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    @JoinColumn(
+            name = "business_service_id",
+            nullable = false
+    )
+    private BusinessService businessService;
 
     @Column(nullable = false)
     private LocalDateTime appointmentTime;

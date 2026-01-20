@@ -4,13 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record CreateAppointmentRequest(
-
-        @NotNull
         Long userId,
-
-        @NotNull
-        Long serviceId,
-
-        @NotNull
+        Long businessServiceId,
         LocalDateTime appointmentTime
 ) {}
+

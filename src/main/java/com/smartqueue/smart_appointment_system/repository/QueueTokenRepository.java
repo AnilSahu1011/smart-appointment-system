@@ -10,13 +10,13 @@ import java.time.LocalDate;
 public interface QueueTokenRepository extends JpaRepository<QueueToken, Long> {
 
     @Query("""
-        SELECT COALESCE(MAX(q.tokenNumber), 0)
-        FROM QueueToken q
-        WHERE q.service.id = :serviceId
-          AND q.queueDate = :queueDate
-    """)
-    int findMaxTokenForServiceAndDate(
-            @Param("serviceId") Long serviceId,
+    SELECT COALESCE(MAX(q.tokenNumber), 0)
+    FROM QueueToken q
+    WHERE q.businessService.id = :businessServiceId
+      AND q.queueDate = :queueDate
+""")
+    int findMaxTokenForBusinessServiceAndDate(
+            @Param("businessServiceId") Long businessServiceId,
             @Param("queueDate") LocalDate queueDate
     );
 }

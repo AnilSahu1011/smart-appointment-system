@@ -32,5 +32,5 @@ public class Branch {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Service> services;
+    private List<BusinessService> services;
 }
