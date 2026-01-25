@@ -11,6 +11,7 @@ import com.smartqueue.smart_appointment_system.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import com.smartqueue.smart_appointment_system.entity.BusinessService;
+import org.springframework.core.env.Environment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,17 +25,18 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final ServiceRepository businessServiceRepository;
     private final StatusHistoryRepository statusHistoryRepository;
     private final QueueTokenRepository queueTokenRepository;
+    private final Environment env;
 
     @Override
     @Transactional
     public AppointmentResponseDTO createAppointment(CreateAppointmentDTO dto) {
 
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(env.getProperty("error.user.not.found")));
 
         BusinessService service =
                 businessServiceRepository.findById(dto.getBusinessServiceId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Service not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException(env.getProperty("error.service.not.found")));
 
         Appointment appointment = Appointment.builder()
                 .customer(user)

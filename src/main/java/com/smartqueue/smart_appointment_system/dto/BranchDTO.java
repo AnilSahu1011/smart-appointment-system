@@ -9,12 +9,12 @@ public class BranchDTO {
 
     private Long id;
 
-    @NotBlank(message = "Branch name is required")
+    @NotBlank(message = "{validation.branch.name.required}")
     private String name;
 
-    @NotBlank(message = "Address is required")
+    @NotBlank(message = "{validation.branch.address.required}")
     private String address;
 
-    @NotNull(message = "Active status is required")
+    @NotNull(message = "{validation.branch.active.required}")
     private Boolean active;
 }

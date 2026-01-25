@@ -6,6 +6,7 @@ import com.smartqueue.smart_appointment_system.exception.ResourceNotFoundExcepti
 import com.smartqueue.smart_appointment_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final Environment env;
+
     @Override
     public UserDTO createUser(UserDTO dto) {
 
@@ -67,6 +70,6 @@ public class UserServiceImpl implements UserService {
     private User findUser(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+                        new ResourceNotFoundException(env.getProperty("error.user.not.found")));
     }
 }

@@ -4,6 +4,8 @@ import com.smartqueue.smart_appointment_system.dto.UserDTO;
 import com.smartqueue.smart_appointment_system.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +46,8 @@ public class UserController {
 
     // DELETE
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        return ResponseEntity.ok().body("Deleted Successfully UserId: "+id);
     }
 }

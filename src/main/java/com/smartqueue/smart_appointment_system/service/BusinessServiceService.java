@@ -1,17 +1,20 @@
 package com.smartqueue.smart_appointment_system.service;
 
-import com.smartqueue.smart_appointment_system.entity.BusinessService;
-import com.smartqueue.smart_appointment_system.entity.BusinessService;
+import com.smartqueue.smart_appointment_system.dto.BusinessServiceDTO;
 
 import java.util.List;
 
 public interface BusinessServiceService {
 
-    BusinessService createService(BusinessService service, Long branchId);
+    BusinessServiceDTO createService(Long branchId, BusinessServiceDTO dto);
 
-    List<BusinessService> getAllServices();
+    List<BusinessServiceDTO> getAllServices();
 
-    List<BusinessService> getServicesByBranch(Long branchId);
+    BusinessServiceDTO getServiceById(Long id);
 
-    BusinessService getServiceById(Long id);
+    List<BusinessServiceDTO> getServicesByBranch(Long branchId);
+
+    BusinessServiceDTO updateService(Long id, BusinessServiceDTO dto);
+
+    void deleteService(Long id);
 }

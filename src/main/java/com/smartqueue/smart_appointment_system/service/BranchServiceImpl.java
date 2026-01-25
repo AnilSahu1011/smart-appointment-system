@@ -6,6 +6,7 @@ import com.smartqueue.smart_appointment_system.repository.BranchRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class BranchServiceImpl implements BranchService {
 
     private final BranchRepository branchRepository;
     private final ModelMapper modelMapper;
+    private final Environment env;
 
     @Override
     public BranchDTO createBranch(BranchDTO dto) {
@@ -34,7 +36,7 @@ public class BranchServiceImpl implements BranchService {
     public List<BranchDTO> getAllBranches() {
         return branchRepository.findAll()
                 .stream()
-                .map(branch -> modelMapper.map(branch, BranchDTO.class))
+                .map(b->modelMapper.map(b, BranchDTO.class))
                 .toList();
     }
 
@@ -65,6 +67,6 @@ public class BranchServiceImpl implements BranchService {
     private Branch findBranch(Long id) {
         return branchRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Branch not found"));
+                        new ResourceNotFoundException(env.getProperty("error.branch.not.found")));
     }
 }
