@@ -10,14 +10,14 @@ public class BusinessServiceDTO {
 
     private Long id;
 
-    @NotBlank(message = "Service name is required")
+    @NotBlank(message = "{validation.businessService.name.required}")
     private String name;
 
-    @NotNull(message = "Duration is required")
-    @Positive(message = "Duration must be greater than 0")
+    @NotNull(message = "{validation.businessService.duration.required}")
+    @Positive(message = "{validation.businessService.duration.positive}")
     private Integer durationInMinutes;
 
-    @NotNull(message = "Active status is required")
+    @NotNull(message = "{validation.businessService.active.required}")
     private Boolean active;
 
     private Long branchId;

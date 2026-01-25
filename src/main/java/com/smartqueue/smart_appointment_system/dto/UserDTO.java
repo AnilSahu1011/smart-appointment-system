@@ -11,16 +11,16 @@ public class UserDTO {
 
     private Long id;
 
-    @NotBlank(message = "Full name is required")
+    @NotBlank(message = "{validation.user.fullName.required}")
     private String fullName;
 
-    @Email(message = "Invalid email format")
-    @NotBlank(message = "Email is required")
+    @NotBlank(message = "{validation.user.email.required}")
+    @Email(message = "{validation.user.email.invalid}")
     private String email;
 
-    @Size(min = 6, message = "Password must be at least 6 characters")
+    @Size(min = 6, message = "{validation.user.password.size}")
     private String password;
 
-    @NotNull(message = "Active status is required")
+    @NotNull(message = "{validation.user.active.required}")
     private Boolean active;
 }

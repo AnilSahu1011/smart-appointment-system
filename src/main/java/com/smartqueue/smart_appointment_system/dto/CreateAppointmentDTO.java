@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 @Data
 public class CreateAppointmentDTO {
 
-    @NotNull(message = "User id is required")
+    @NotNull(message = "{validation.appointment.userId.required}")
     private Long userId;
 
-    @NotNull(message = "Business service id is required")
+    @NotNull(message = "{validation.appointment.businessServiceId.required}")
     private Long businessServiceId;
 
-    @NotNull(message = "Appointment time is required")
-    @Future(message = "Appointment time must be in the future")
+    @NotNull(message = "{validation.appointment.time.required}")
+    @Future(message = "{validation.appointment.time.future}")
     private LocalDateTime appointmentTime;
 }
 
