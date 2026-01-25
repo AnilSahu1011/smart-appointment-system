@@ -1,10 +1,15 @@
 package com.smartqueue.smart_appointment_system.dto;
 
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record ErrorResponse(
-        int status,
-        String error,
-        String message,
-        LocalDateTime timestamp
-) {}
+import java.time.LocalDateTime;
+import java.util.Map;
+@Data
+@AllArgsConstructor
+public class ErrorResponse {
+    private int status;
+    private String error;
+    private Map<String, String> fieldErrors;
+    private LocalDateTime timestamp;
+}
